@@ -53,7 +53,7 @@ class CNN(nn.Module):
 
 def load_model():
     model = CNN()
-    model = model.load_state_dict(torch.load('bloodnew.pt'))
+    model.load_state_dict(torch.load('bloodnew.pt'))
     
     return model
 
@@ -70,40 +70,31 @@ def load_image():
 
 def predict(model, image):
     preprocess = Compose([
-        Resize(256),
-        CenterCrop(224),
+        Resize((64,64)),
+        # CenterCrop(32),
         ToTensor(),
         Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
     input_tensor = preprocess(image)
-    input_batch = input_tensor.unsqueeze(0)
-    # model.eval()
-    # with torch.no_grad():
-    #     output = model(input_batch)
-
-    # probabilities = torch.nn.functional.softmax(output[0], dim=0)
-
-    # top_prob, top_catid = torch.topk(probabilities,1)
+    # input_batch = input_tensor.unsqueeze(0)
+    
     st.write("Я думаю, что это...")
     class_ = model(input_tensor.unsqueeze(0)).argmax().item()
     # predictions = model(input_batch)
-    # class_ = F.softmax(predictions[0], dim=0)
-    # classes = ['EOCINOPHIL', 'LYMPHOCYTE','MONOCYTE', 'NEUTROPHIL']
     
-    # st.write(class_)
     one = 'EOCINOPHIL'
     two = 'LYMPHOCYTE'
     three = 'MONOCYTE'
     four = 'NEUTROPHIL'
-    st.write(class_)
-    # if class_ == 0:
-    #     st.write(f'Predicted class: {one}')
-    # if class_ == 1:
-    #     st.write(f'Predicted class: {two}')
-    # if class_ == 2:
-    #     st.write(f'Predicted class: {three}')
-    # if class_ == 3:
-    #     st.write(f'Predicted class: {four}')  
+    # st.write(class_)
+    if class_ == 0:
+        st.write(f' {one}')
+    if class_ == 1:
+        st.write(f'{two}')
+    if class_ == 2:
+        st.write(f' {three}')
+    if class_ == 3:
+        st.write(f'{four}')  
     
 
 def main():
