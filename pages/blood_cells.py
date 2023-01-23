@@ -70,7 +70,7 @@ def load_image():
 
 def predict(model, image):
     preprocess = Compose([
-        Resize(256),
+        Resize(256), # надо применить эту функцию отдельно на изображении и понять, в чем проблема, но она точно тут. 
         CenterCrop(224),
         ToTensor(),
         Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
